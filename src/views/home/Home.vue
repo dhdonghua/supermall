@@ -3,38 +3,18 @@
     <nav-bar class="home-nav">
       <template #center>购物街</template>
     </nav-bar>
-    <home-swiper :banners="banners" />
-    <recommend-view :recommends="recommends" />
-    <feature-view />
-    <tab-control
-      class="tab-control"
-      :titles="['流行', '新款', '精选']"
-      @tabClick="tabClick"
-    />
-    <goods-list :goods="shouGoods" />
 
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li>10</li>
-      <li>11</li>
-      <li>12</li>
-      <li>13</li>
-      <li>14</li>
-      <li>15</li>
-      <li>16</li>
-      <li>17</li>
-      <li>18</li>
-      <li>19</li>
-      <li>20</li>
-    </ul>
+    <scroll class="scroll-content">
+      <home-swiper :banners="banners" />
+      <recommend-view :recommends="recommends" />
+      <feature-view />
+      <tab-control
+        class="tab-control"
+        :titles="['流行', '新款', '精选']"
+        @tabClick="tabClick"
+      />
+      <goods-list :goods="shouGoods" />
+    </scroll>
   </div>
 </template>
 
@@ -43,6 +23,7 @@ import HomeSwiper from "./childComps/HomeSwiper";
 import RecommendView from "./childComps/RecommendView";
 import FeatureView from "./childComps/FeatureView";
 
+import Scroll from "components/common/scroll/Scroll";
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
@@ -58,6 +39,7 @@ export default {
     NavBar,
     TabControl,
     GoodsList,
+    Scroll,
   },
   data() {
     return {
@@ -123,9 +105,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #home {
   padding-top: 44px;
+  height: 100vh;
 }
 .home-nav {
   background-color: var(--color-tint);
@@ -138,8 +121,17 @@ export default {
   z-index: 9;
 }
 .tab-control {
-  position: sticky;
+  /* position: sticky; */
   top: 44px;
   z-index: 9;
+}
+.scroll-content {
+  overflow: hidden;
+
+  position: absolute;
+  top: 44px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
 }
 </style>
