@@ -47,7 +47,9 @@ export default {
      */
     data: {
       type: Object,
-      default: null,
+      default() {
+        return null;
+      },
     },
     /**
      * 是否派发滚动到底部的事件，用于上拉加载
