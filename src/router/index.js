@@ -7,6 +7,8 @@ const Home = () => import('views/home/Home')
 const Category = () => import('views/category/Category')
 const Cart = () => import('views/cart/Cart')
 const Profile = () => import('views/profile/Profile')
+const Detail = () => import('views/detail/Detail')
+
 
 const routes = [{
     path: '',
@@ -31,6 +33,11 @@ const routes = [{
     path: '/profile',
     name: '我的',
     component: Profile
+  },
+  {
+    path: '/detail/:id',
+    name: '详情页',
+    component: Detail
   }
 ]
 

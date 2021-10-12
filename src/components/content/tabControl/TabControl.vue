@@ -23,7 +23,7 @@ export default {
       },
     },
   },
-  data: function () {
+  data() {
     return {
       currentIndex: 0,
     };

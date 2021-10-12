@@ -5,6 +5,7 @@ const Random = Mock.Random
 
 const poplist = Mock.mock({
   'list|30': [{
+    'id': '@id',
     'title': '@title(1,5)',
     'price': '@integer(1,1000)',
     'cfav': '@integer(0, 1000)',
@@ -16,6 +17,7 @@ const poplist = Mock.mock({
 
 const newlist = Mock.mock({
   'list|30': [{
+    'id': '@id',
     'title': '@title',
     'price': '@integer(1,1000)',
     'cfav': '@integer(0, 1000)',
@@ -27,6 +29,7 @@ const newlist = Mock.mock({
 
 const selllist = Mock.mock({
   'list|30': [{
+    'id': '@id',
     'title': Random.title(1, 5),
     'price': Random.integer(0, 1000),
     'cfav': Random.integer(0, 1000),
