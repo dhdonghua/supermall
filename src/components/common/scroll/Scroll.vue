@@ -134,6 +134,9 @@ export default {
     scrollTo(x, y, time = 300) {
       this.scroll && this.scroll.scrollTo(x, y, time);
     },
+    getScrollY() {
+      return this.scroll ? this.scroll.y : 0
+    }
   },
   mounted() {
     setTimeout(() => {
