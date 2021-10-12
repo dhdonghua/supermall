@@ -41,6 +41,7 @@ const selllist = Mock.mock({
 
 Mock.mock(RegExp(baseURL + '/home/data.*'), (options) => {
   const type = options.url.toString()
+  console.log(type);
   if (type.indexOf('pop') != -1) {
     return {
       'data': poplist
@@ -56,4 +57,22 @@ Mock.mock(RegExp(baseURL + '/home/data.*'), (options) => {
   } else {
     console.log("请求的参数错误！ 参数为：" + options);
   }
+})
+
+Mock.mock(RegExp(baseURL + '/detail.*'), (options) => {
+  const iid = options.url.toString()
+
+  return Mock.mock({
+    'id': iid,
+    'result': {
+      'itemInfo': {
+        'topImage|1-10': ['@dataImage("320x300", "商品")']
+      },
+      'price': Random.integer(0, 1000),
+      'cfav': Random.integer(0, 1000),
+      'show': {
+        'img': Random.image('200x300', '#894FC4', '#FFF', 'png', '!')
+      }
+    }
+  })
 })
