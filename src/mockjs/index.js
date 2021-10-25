@@ -66,7 +66,29 @@ Mock.mock(RegExp(baseURL + '/detail.*'), (options) => {
     'id': iid,
     'result': {
       'itemInfo': {
-        'topImage|1-10': ['@dataImage("320x300", "商品")']
+        'topImage|1-10': ['@dataImage("320x300", "商品")'],
+        'title': '@title',
+        'desc': '@sentence',
+        'oldPrice': '@integer(0, 1000)',
+        'price': '@integer(0, @oldPrice)',
+        'discountDesc|1': ['今日特价', '折扣价', '优惠价'],
+        'highNowPrice': ''
+      },
+      'columns': ['@integer(0, 1000)', '@integer(0, 1000)'],
+      'shopInfo' : {
+        'services' : [{
+          'icon': Random.dataImage('20x10', '√'),
+          'name': '退货补运费'
+        },{
+          'icon': Random.dataImage('20x10', '√'),
+          'name': '全国包邮'
+        },{
+          'icon': Random.dataImage('20x10', '√'),
+          'name': '7天无理由退货'
+        },{
+          'icon': Random.dataImage('20x10', '√'),
+          'name': '72小时发货'
+        }]
       },
       'price': Random.integer(0, 1000),
       'cfav': Random.integer(0, 1000),
