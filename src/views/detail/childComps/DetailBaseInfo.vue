@@ -26,6 +26,9 @@ export default {
   props: {
     goodsItem: {
       type: Object,
+      default () {
+        return {};
+      },
     },
   },
 };

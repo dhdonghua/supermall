@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <detail-nav-bar />
+  <div id="detail">
+    <detail-nav-bar class="detail-nav-bar" />
     <detail-swiper :topImages="topImages" />
-    <detail-base-info :goodsItem="goodsItem"/>
+    <detail-base-info :goodsItem="goodsItem" />
+    <detail-shop-info :shop="shopInfo" />
   </div>
 </template>
 
@@ -10,18 +11,28 @@
 import DetailNavBar from "./childComps/DetailNavBar.vue";
 import DetailSwiper from "./childComps/DetailSwiper.vue";
 import DetailBaseInfo from './childComps/DetailBaseInfo.vue';
+import DetailShopInfo from './childComps/DetailShopInfo.vue';
 
-import { getDetail, Goods } from "network/detail";
-
+import {
+  getDetail,
+  Goods,
+  Shop
+} from "network/detail";
 
 export default {
   name: "Detail",
-  components: { DetailNavBar, DetailSwiper, DetailBaseInfo },
+  components: {
+    DetailNavBar,
+    DetailSwiper,
+    DetailBaseInfo,
+    DetailShopInfo
+  },
   data() {
     return {
       iid: null,
       topImages: [],
       goodsItem: {},
+      shopInfo: {}
     };
   },
   created() {
@@ -38,6 +49,7 @@ export default {
         const results = res.result
         this.topImages = results.itemInfo.topImage;
         this.goodsItem = new Goods(results.itemInfo, results.columns, results.shopInfo.services)
+        this.shopInfo = new Shop(results.shopInfo)
       });
     },
   },
@@ -45,4 +57,19 @@ export default {
 </script>
 
 <style scoped>
+#detail {
+  /* 为了覆盖底部的导航栏MainTabBar组件 */
+  position: relative;
+  z-index: 9;
+  background-color: #fff;
+}
+
+.detail-nav-bar {
+  position: -webkit-sticky;
+  /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background-color: #fff;
+}
 </style>

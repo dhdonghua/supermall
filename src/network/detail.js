@@ -22,3 +22,19 @@ export class Goods {
     this.nowPrice = itemInfo.highNowPrice;
   }
 }
+
+export class Shop {
+  constructor(shopInfo) {
+    this.logo = shopInfo.shopLogo;
+    this.name = shopInfo.name;
+    this.fans = shopInfo.cFans;
+    this.sells = shopInfo.cSells;
+    this.score = shopInfo.score;
+    this.goodsCount = shopInfo.cGoods
+
+    for (let index = 0; index < this.score.length; index++) {
+      this.score[index].score = this.score[index].score / 100
+      this.score[index].isBetter = (this.score[index].score >= 4.8) ? true : false ;
+    }
+  }
+}
