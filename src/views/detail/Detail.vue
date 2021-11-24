@@ -4,6 +4,8 @@
     <detail-swiper :topImages="topImages" />
     <detail-base-info :goodsItem="goodsItem" />
     <detail-shop-info :shop="shopInfo" />
+    <detail-goods-info :detailInfo="detailInfo" />
+    <detail-param-info :paramInfo="paramInfo" />
   </div>
 </template>
 
@@ -12,11 +14,14 @@ import DetailNavBar from "./childComps/DetailNavBar.vue";
 import DetailSwiper from "./childComps/DetailSwiper.vue";
 import DetailBaseInfo from './childComps/DetailBaseInfo.vue';
 import DetailShopInfo from './childComps/DetailShopInfo.vue';
+import DetailGoodsInfo from './childComps/DetailGoodsInfo.vue';
+import DetailParamInfo from './childComps/DetailParamInfo.vue';
 
 import {
   getDetail,
   Goods,
-  Shop
+  Shop,
+  GoodsParam
 } from "network/detail";
 
 export default {
@@ -25,14 +30,18 @@ export default {
     DetailNavBar,
     DetailSwiper,
     DetailBaseInfo,
-    DetailShopInfo
+    DetailShopInfo,
+    DetailGoodsInfo,
+    DetailParamInfo
   },
   data() {
     return {
       iid: null,
       topImages: [],
       goodsItem: {},
-      shopInfo: {}
+      shopInfo: {},
+      detailInfo: {},
+      paramInfo: {}
     };
   },
   created() {
@@ -47,9 +56,21 @@ export default {
       getDetail(iid).then((res) => {
         console.log(res);
         const results = res.result
+
+        //顶部轮播图
         this.topImages = results.itemInfo.topImage;
+
+        //获取商品信息
         this.goodsItem = new Goods(results.itemInfo, results.columns, results.shopInfo.services)
+
+        //获取店铺信息
         this.shopInfo = new Shop(results.shopInfo)
+
+        //获取商品的详情数据
+        this.detailInfo = results.detailInfo
+
+        //获取参数信息
+        this.paramInfo = new GoodsParam(results.itemParams.info, results.itemParams.rule)
       });
     },
   },

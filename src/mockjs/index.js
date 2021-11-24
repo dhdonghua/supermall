@@ -112,6 +112,50 @@ Mock.mock(RegExp(baseURL + '/detail.*'), (options) => {
       'cfav': Random.integer(0, 1000),
       'show': {
         'img': Random.image('200x300', '#894FC4', '#FFF', 'png', '!')
+      },
+      'detailInfo': {
+        'desc': '新款上市',
+        'detailImage': [{
+          'key': '穿着效果',
+          'list|1-10': ['@dataImage("320x300", "商品")']
+        }]
+      },
+      'itemParams': {
+        'info': {
+          'key': '产品参数',
+          'set': [{
+              'key': '图案',
+              'value': '宫廷复古图'
+            },
+            {
+              'key': '厂名',
+              'value': 'XXX服饰有限公司'
+            },
+            {
+              'key': '颜色',
+              'value': '黑白拼接'
+            },
+            {
+              'key': '袖型',
+              'value': '常规袖'
+            },
+            {
+              'key': '尺码',
+              'value': 'M,L,XL,XXL'
+            }
+          ]
+        },
+        'rule': {
+          'key': '尺码说明',
+          'tables': [
+            [
+              ['尺码', 'M', 'L', 'XL', 'XXL'],
+              ['衣长', '61.5', '63', '64.5', '66'],
+              ['胸围', '98', '104', '110', '116'],
+              ['袖长', '63', '66', '68.5', '70.5']
+            ]
+          ]
+        }
       }
     }
   })

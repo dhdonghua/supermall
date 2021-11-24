@@ -1,4 +1,6 @@
-import { request } from "./axios";
+import {
+  request
+} from "./axios";
 
 export function getDetail(iid) {
   return request({
@@ -34,7 +36,16 @@ export class Shop {
 
     for (let index = 0; index < this.score.length; index++) {
       this.score[index].score = this.score[index].score / 100
-      this.score[index].isBetter = (this.score[index].score >= 4.8) ? true : false ;
+      this.score[index].isBetter = (this.score[index].score >= 4.8) ? true : false;
     }
+  }
+}
+
+export class GoodsParam {
+  constructor(info, rule) {
+    // 注: images可能没有值(某些商品有值, 某些没有值)
+    this.image = info.images ? info.images[0] : '';
+    this.infos = info.set;
+    this.sizes = rule.tables;
   }
 }
