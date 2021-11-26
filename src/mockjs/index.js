@@ -39,6 +39,16 @@ const selllist = Mock.mock({
   }]
 })
 
+const recomend = Mock.mock({
+  'list|24': [{
+    'id': '@id',
+    'title': Random.title(1, 5),
+    'price': Random.integer(0, 1000),
+    'cfav': Random.integer(0, 1000),
+    'image': '@dataImage("200x300", "商品")'
+  }]
+})
+
 Mock.mock(RegExp(baseURL + '/home/data.*'), (options) => {
   const type = options.url.toString()
   console.log(type);
@@ -117,7 +127,7 @@ Mock.mock(RegExp(baseURL + '/detail.*'), (options) => {
         'desc': '新款上市',
         'detailImage': [{
           'key': '穿着效果',
-          'list|1-10': ['@dataImage("320x300", "商品")']
+          'list|1-10': ['@dataImage("320x300", "卖家秀")']
         }]
       },
       'itemParams': {
@@ -156,7 +166,26 @@ Mock.mock(RegExp(baseURL + '/detail.*'), (options) => {
             ]
           ]
         }
+      },
+      'rate': {
+        'cRate': '@integer(0, 10)',
+        'list': [{
+          'user': {
+            'uname': '@cname',
+            'avatar': Random.dataImage('30x30', '客户'),
+          },
+          'content': '刚好合适，物美价廉，衣服面料很好，穿着很舒服，版型也好看，非常棒。',
+          'created': '@date',
+          'style': '颜色：黑白拼接 尺码：M',
+          'images|1-10': ['@dataImage("84x84", "买家秀")']
+        }]
       }
     }
   })
+})
+
+Mock.mock(RegExp(baseURL + '/recommend'), () => {
+    return {
+      'data': recomend
+    }
 })

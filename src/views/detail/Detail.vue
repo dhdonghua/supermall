@@ -6,23 +6,22 @@
     <detail-shop-info :shop="shopInfo" />
     <detail-goods-info :detailInfo="detailInfo" />
     <detail-param-info :paramInfo="paramInfo" />
+    <detail-comment-info :commentInfo="commentInfo" />
+    <goods-list :goods="recommends" />
   </div>
 </template>
 
 <script>
-import DetailNavBar from "./childComps/DetailNavBar.vue";
-import DetailSwiper from "./childComps/DetailSwiper.vue";
-import DetailBaseInfo from './childComps/DetailBaseInfo.vue';
-import DetailShopInfo from './childComps/DetailShopInfo.vue';
-import DetailGoodsInfo from './childComps/DetailGoodsInfo.vue';
-import DetailParamInfo from './childComps/DetailParamInfo.vue';
+import DetailNavBar from "./childComps/DetailNavBar";
+import DetailSwiper from "./childComps/DetailSwiper";
+import DetailBaseInfo from "./childComps/DetailBaseInfo";
+import DetailShopInfo from "./childComps/DetailShopInfo";
+import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
+import DetailParamInfo from "./childComps/DetailParamInfo";
+import DetailCommentInfo from "./childComps/DetailCommentInfo";
 
-import {
-  getDetail,
-  Goods,
-  Shop,
-  GoodsParam
-} from "network/detail";
+import { getDetail, getRecommend, Goods, Shop, GoodsParam } from "network/detail";
+import GoodsList from 'components/content/goods/GoodsList'
 
 export default {
   name: "Detail",
@@ -32,7 +31,9 @@ export default {
     DetailBaseInfo,
     DetailShopInfo,
     DetailGoodsInfo,
-    DetailParamInfo
+    DetailParamInfo,
+    DetailCommentInfo,
+    GoodsList,
   },
   data() {
     return {
@@ -41,12 +42,15 @@ export default {
       goodsItem: {},
       shopInfo: {},
       detailInfo: {},
-      paramInfo: {}
+      paramInfo: {},
+      commentInfo: {},
+      recommends: [],
     };
   },
   created() {
     this.iid = this.$route.params.id;
     this.getDetailData(this.iid);
+    this.getRecommendData();
   },
   methods: {
     /**
@@ -55,22 +59,40 @@ export default {
     getDetailData(iid) {
       getDetail(iid).then((res) => {
         console.log(res);
-        const results = res.result
+        const results = res.result;
 
         //顶部轮播图
         this.topImages = results.itemInfo.topImage;
 
         //获取商品信息
-        this.goodsItem = new Goods(results.itemInfo, results.columns, results.shopInfo.services)
+        this.goodsItem = new Goods(
+          results.itemInfo,
+          results.columns,
+          results.shopInfo.services
+        );
 
         //获取店铺信息
-        this.shopInfo = new Shop(results.shopInfo)
+        this.shopInfo = new Shop(results.shopInfo);
 
         //获取商品的详情数据
-        this.detailInfo = results.detailInfo
+        this.detailInfo = results.detailInfo;
 
         //获取参数信息
-        this.paramInfo = new GoodsParam(results.itemParams.info, results.itemParams.rule)
+        this.paramInfo = new GoodsParam(
+          results.itemParams.info,
+          results.itemParams.rule
+        );
+
+        //获取评论信息
+        if (results.rate.cRate !== 0) {
+          this.commentInfo = results.rate.list[0];
+        }
+      });
+    },
+    getRecommendData() {
+      getRecommend().then((res) => {
+        //获取推荐商品信息
+        this.recommends = res.data.list;
       });
     },
   },
