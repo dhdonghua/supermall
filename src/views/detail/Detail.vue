@@ -52,13 +52,22 @@ export default {
     this.getDetailData(this.iid);
     this.getRecommendData();
   },
+  watch:{
+    $route(to,from){
+      if(to.path.indexOf('/detail/') != -1 && from.path.indexOf('/detail/') != -1){
+        this.iid = to.params.id;
+        this.getDetailData(this.iid);
+        this.getRecommendData();
+        window.scrollTo(0, 0);
+      }
+    }
+  },
   methods: {
     /**
      * 网络请求相关
      */
     getDetailData(iid) {
       getDetail(iid).then((res) => {
-        console.log(res);
         const results = res.result;
 
         //顶部轮播图

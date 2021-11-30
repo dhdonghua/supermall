@@ -51,7 +51,6 @@ const recomend = Mock.mock({
 
 Mock.mock(RegExp(baseURL + '/home/data.*'), (options) => {
   const type = options.url.toString()
-  console.log(type);
   if (type.indexOf('pop') != -1) {
     return {
       'data': poplist
