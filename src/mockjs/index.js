@@ -167,7 +167,7 @@ Mock.mock(RegExp(baseURL + '/detail.*'), (options) => {
         }
       },
       'rate': {
-        'cRate': '@integer(0, 10)',
+        'cRate': '@integer(1, 10)',
         'list': [{
           'user': {
             'uname': '@cname',
