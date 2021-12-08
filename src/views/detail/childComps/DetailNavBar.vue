@@ -61,5 +61,6 @@ export default {
 
 .back img {
   vertical-align: middle;
+  padding-left: 1em;
 }
 </style>

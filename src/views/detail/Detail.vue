@@ -8,6 +8,7 @@
     <detail-param-info :paramInfo="paramInfo" ref="param" />
     <detail-comment-info :commentInfo="commentInfo" ref="comment" />
     <goods-list :goods="recommends" ref="goodsList" />
+    <detail-bottom-bar />
   </div>
 </template>
 
@@ -19,6 +20,7 @@ import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
+import DetailBottomBar from "./childComps/DetailBottomBar"
 
 import {
   getDetail,
@@ -39,6 +41,7 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
+    DetailBottomBar,
     GoodsList,
   },
   data() {
@@ -101,12 +104,12 @@ export default {
         if (results.rate.cRate !== 0) {
           this.commentInfo = results.rate.list[0];
         }
+
         this.$nextTick(() => {
           this.themeTop.push(this.$refs.swiper.$el.offsetTop - 44);
           this.themeTop.push(this.$refs.param.$el.offsetTop - 44);
           this.themeTop.push(this.$refs.comment.$el.offsetTop - 44);
           this.themeTop.push(this.$refs.goodsList.$el.offsetTop - 44);
-          console.log(this.themeTop);
           window.addEventListener('scroll', this.handleScroll)
         });
       });
@@ -185,6 +188,8 @@ export default {
   position: relative;
   z-index: 9;
   background-color: #fff;
+  /* 为了不被底部的导航栏DetailBottomBar组件覆盖部分商品信息*/
+  margin-bottom: 58px; 
 }
 
 .detail-nav-bar {
