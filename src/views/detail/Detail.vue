@@ -8,7 +8,8 @@
     <detail-param-info :paramInfo="paramInfo" ref="param" />
     <detail-comment-info :commentInfo="commentInfo" ref="comment" />
     <goods-list :goods="recommends" ref="goodsList" />
-    <detail-bottom-bar />
+    <detail-bottom-bar />  
+    <back-top @click="backtopclick" v-show="showBackTop" />
   </div>
 </template>
 
@@ -30,6 +31,7 @@ import {
   GoodsParam,
 } from "network/detail";
 import GoodsList from "components/content/goods/GoodsList";
+import { backTopMixin } from "common/mixin.js"
 
 export default {
   name: "Detail",
@@ -44,6 +46,7 @@ export default {
     DetailBottomBar,
     GoodsList,
   },
+  mixins: [ backTopMixin ],
   data() {
     return {
       iid: null,
@@ -169,6 +172,9 @@ export default {
     },
     handleScroll() {
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop //获取滚动距离
+      
+      //判断是否显示回到顶部组件BackTop
+      this.showBackTop = scrollTop > 1000;
 
       let length = this.themeTop.length
       for (let i = 0; i < length; i++) {
@@ -177,6 +183,9 @@ export default {
           this.$refs.navbar.currentIndex = this.currentIndex
         }
       }
+    },
+    backtopclick() {
+      this.scrollTo(0)
     }
   },
 };
