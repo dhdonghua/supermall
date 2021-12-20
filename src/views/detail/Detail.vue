@@ -8,7 +8,7 @@
     <detail-param-info :paramInfo="paramInfo" ref="param" />
     <detail-comment-info :commentInfo="commentInfo" ref="comment" />
     <goods-list :goods="recommends" ref="goodsList" />
-    <detail-bottom-bar />  
+    <detail-bottom-bar @addToCart="addToCart" />
     <back-top @click="backtopclick" v-show="showBackTop" />
   </div>
 </template>
@@ -31,7 +31,9 @@ import {
   GoodsParam,
 } from "network/detail";
 import GoodsList from "components/content/goods/GoodsList";
-import { backTopMixin } from "common/mixin.js"
+import {
+  backTopMixin
+} from "common/mixin.js"
 
 export default {
   name: "Detail",
@@ -46,7 +48,7 @@ export default {
     DetailBottomBar,
     GoodsList,
   },
-  mixins: [ backTopMixin ],
+  mixins: [backTopMixin],
   data() {
     return {
       iid: null,
@@ -172,7 +174,7 @@ export default {
     },
     handleScroll() {
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop //获取滚动距离
-      
+
       //判断是否显示回到顶部组件BackTop
       this.showBackTop = scrollTop > 1000;
 
@@ -186,6 +188,18 @@ export default {
     },
     backtopclick() {
       this.scrollTo(0)
+    },
+    addToCart() {
+      // 1.创建对象
+      const obj = {}
+      // 2.对象信息
+      obj.iid = this.iid
+      obj.imgURL = this.topImages[0]
+      obj.title = this.goodsItem.title
+      obj.desc = this.goodsItem.desc
+      obj.newPrice = this.goodsItem.nowPrice
+
+      this.$store.commit('addCart', obj)
     }
   },
 };
@@ -198,7 +212,7 @@ export default {
   z-index: 9;
   background-color: #fff;
   /* 为了不被底部的导航栏DetailBottomBar组件覆盖部分商品信息*/
-  margin-bottom: 58px; 
+  margin-bottom: 58px;
 }
 
 .detail-nav-bar {
